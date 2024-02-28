@@ -87,18 +87,18 @@ public class StudentOps {
         return getYoungestFemaleStudent;
     }
 
-    public String getAllStudentNames(List<Student> students){
+    public static String getAllStudentNames(List<Student> students){
         return students.stream().flatMap(s -> Stream.of(s.getFirst_name() + " " + s.getLast_name())).collect(Collectors.joining(", "));
     }
 
-    public int getSumOfallStudentAges(List<Student> students)
+    public static int getSumOfallStudentAges(List<Student> students)
     {
         return students.stream().flatMapToInt((student) ->{
             return IntStream.of(student.getAge());
         }).sum();
     }
 
-    public Boolean checkIfAllStudentsAreAdults(List<Student> students){
+    public static Boolean checkIfAllStudentsAreAdults(List<Student> students){
         AtomicBoolean result = new AtomicBoolean(true);
         students.stream().forEach((student) ->{
             if(student.getAge() < 18){
@@ -108,29 +108,29 @@ public class StudentOps {
         return result.get();
     }
 
-    public Student getOldestStudent(List<Student> students){
+    public static Student getOldestStudent(List<Student> students){
         return students.stream().max((s1,s2) ->{
             return s1.getAge() - s2.getAge();
         }).get();
     }
 
-    public List<Student> converAllStudentFirstNamesToUpperCase(List<Student> students){
+    public static List<Student> convertAllStudentFirstNamesToUpperCase(List<Student> students){
         return students.stream().map((student) ->{
             return new Student(student.getId(),student.getFirst_name().toUpperCase(),student.getLast_name(),student.getEmail(),student.getGender(),student.getDob().toString());
         }).collect(Collectors.toList());
     }
 
-    public Student getStudentById(List<Student> students,int id){
+    public static Student getStudentById(List<Student> students,int id){
         return students.stream().filter(s ->{
             return s.getId() == id;
         }).findFirst().orElse(null);
     }
 
-    public Map<Integer,List<Student>> getStudentsByAge(List<Student> students){
+    public static Map<Integer,List<Student>> getStudentsByAge(List<Student> students){
         return students.stream().collect(Collectors.groupingBy(Student::getAge));
     }
 
-    public double getStandardDeviationOfStudentsAge(List<Student> students){
+    public static double getStandardDeviationOfStudentsAge(List<Student> students){
         int age_sum = students.stream().mapToInt((s) ->{
             return s.getAge();
         }).sum();
