@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -103,7 +104,9 @@ public class StudentOpsTest {
 
         @Test
         void checkIfAllStudentFirstNameMatchesString(){
-            String f
+            String firstNames =  students.stream().map((s) ->{
+                return s.getFirst_name()  + " " + s.getLast_name();
+            }).collect(Collectors.joining());
         }
 
 
