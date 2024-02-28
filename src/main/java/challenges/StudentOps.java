@@ -7,9 +7,7 @@ import domain.Student;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -38,9 +36,12 @@ public class StudentOps {
         }
 
     public static int getAverageAgeOfStudents(List<Student> students){
-        return (int)Math.floor(students.stream().flatMapToInt(s ->
+
+        OptionalDouble average = (students.stream().flatMapToInt(s ->
              IntStream.of(s.getAge())
-        ).average().getAsDouble());
+        ).average());
+        int result = (int)average.getAsDouble();
+        return result;
     }
 
     public static void printAllStudentNames(List<Student> students){
@@ -77,15 +78,16 @@ public class StudentOps {
         return students.stream().collect(Collectors.groupingBy(Student::getGender,Collectors.counting()));
     }
 
-    public Student getYoungestFemaieStudent(List<Student> students){
-        return students.stream().filter((s) ->{
-            return s.getGender().equalsIgnoreCase("F");
-        }).min((s1,s2) ->{
+    public static Optional<Student> getYoungestFemaieStudent(List<Student> students){
+        Optional<Student> getYoungestFemaleStudent = Optional.of(students.stream().filter((s) -> {
+            return s.getGender().equalsIgnoreCase("Female");
+        }).min((s1, s2) -> {
             return s1.getAge() - s2.getAge();
-        }).get();
+        }).get());
+        return getYoungestFemaleStudent;
     }
 
-    public String getAllStudentFirstNames(List<Student> students){
+    public String getAllStudentNames(List<Student> students){
         return students.stream().flatMap(s -> Stream.of(s.getFirst_name() + " " + s.getLast_name())).collect(Collectors.joining(", "));
     }
 
