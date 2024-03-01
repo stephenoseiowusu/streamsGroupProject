@@ -174,6 +174,21 @@ public class StudentOpsTest {
             result = StudentOps.getStudentsByAge(students);
             Assertions.assertEquals(studentsMap,result);
         }
+        @Test
+        void getStandardDeviationOfStudentAges(){
+            int age_sum  = 0;
+            for(Student student:students){
+                age_sum += student.getAge();
+            }
+            double age_avg = age_sum / students.size();
+            double standard_deviation = 0.0;
+            for(Student student:students){
+                standard_deviation += Math.pow(student.getAge() - age_avg, 2);
+            }
+            standard_deviation = Math.sqrt(standard_deviation/students.size());
+            double standard_deviation_result = StudentOps.getStandardDeviationOfStudentsAge(students);
+            Assertions.assertEquals(standard_deviation,standard_deviation_result);
+        }
 
 
 
