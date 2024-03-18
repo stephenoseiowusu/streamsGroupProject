@@ -48,11 +48,15 @@ public class StudentOpsTest {
 
         @Test
         void shouldGetAverageAgeOfStudents(){
+            int actual_average = 0;
 
 
             int average_age_of_students  = StudentOps.getAverageAgeOfStudents(students);
-
-            assertEquals(18,average_age_of_students);
+            for(Student s : students){
+               actual_average += s.getAge();
+            }
+            actual_average = actual_average / students.size();
+            assertEquals(actual_average,average_age_of_students);
         }
 
         @Test
